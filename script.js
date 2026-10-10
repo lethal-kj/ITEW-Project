@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-  // Show a colored message inside #message
   function showMessage(message, type) {
     $("#message").removeClass("d-none alert-success alert-danger alert-secondary").addClass("alert-" + type).text(message);
   }
@@ -8,7 +7,6 @@ $(document).ready(function () {
   // ===== CART =====
   let cart = {};
 
-  // Show the cart items and the total
   function displayCart() {
     let rows = "";
     let total = 0;
@@ -24,7 +22,6 @@ $(document).ready(function () {
     $("#total").text("₱" + total);
   }
 
-  // Add to Cart button
   $(".add").click(function () {
     let card = $(this).closest(".card");
     let name = card.find("h5").text();
@@ -37,14 +34,12 @@ $(document).ready(function () {
     showMessage(name + " added to cart.", "success");
   });
 
-  // Clear Cart button
   $("#clear-cart").click(function () {
     cart = {};
     displayCart();
     showMessage("Cart cleared.", "secondary");
   });
 
-  // Place Order button
   $("#place-order").click(function () {
     if ($.isEmptyObject(cart)) {
       showMessage("Your cart is empty.", "danger");
@@ -58,7 +53,6 @@ $(document).ready(function () {
   // ===== REVIEWS =====
   let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
 
-  // Show all reviews, the average rating, and the review count
   function displayReviews() {
     let total = 0;
     $("#reviewsList").empty();
@@ -80,7 +74,6 @@ $(document).ready(function () {
     localStorage.setItem("reviews", JSON.stringify(reviews));
   }
 
-  // Submit Review button
   $("#reviewForm").submit(function (event) {
     event.preventDefault();
     let name = $("#reviewerName").val().trim();
@@ -95,7 +88,6 @@ $(document).ready(function () {
     showMessage("Thank you! Your review was submitted successfully.", "success");
   });
 
-  // Delete button on a review
   $("#reviewsList").on("click", ".delete", function () {
     reviews.splice($(this).data("index"), 1);
     displayReviews();
@@ -108,8 +100,7 @@ $(document).ready(function () {
     this.reset();
     $("#message").removeClass("d-none");
   });
-
-  // Show the cart and reviews when the page opens
+  
   displayCart();
   displayReviews();
 });
